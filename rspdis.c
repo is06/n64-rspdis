@@ -1,11 +1,16 @@
 #include <stdio.h>
 #include "rspdis.h"
 
-int main() {
+int main(int argc, char* argv[]) {
 
-    FILE* source = fopen("source.bin", "rb");
+    if (argc != 2) {
+        printf("Usage: rspdis file\n");
+        return 1;
+    }
+
+    FILE* source = fopen(argv[1], "rb");
     if (source == NULL) {
-        printf("Unable to open source file");
+        printf("Unable to open file %s\n", argv[1]);
         return 1;
     }
 
