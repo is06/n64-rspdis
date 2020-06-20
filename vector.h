@@ -3,11 +3,10 @@
 
 void write_load_vector_instruction(const unsigned char* instruction, FILE* file);
 void write_store_vector_instruction(const unsigned char* instruction, FILE* file);
-
 void write_loadstore_vector_instruction_rest(const unsigned char* instruction, FILE* file);
 void write_vector_operation_instruction(const unsigned char* instruction, FILE* file);
-
 void write_vector_logical_instruction(const unsigned char* instruction, FILE* file);
+void write_vector_move_instruction(const unsigned char* instruction, FILE* file);
 
 unsigned char get_loadstore_vector_opcode(const unsigned char* instruction);
 unsigned char get_loadstore_vector_vt(const unsigned char* instruction);

@@ -79,7 +79,7 @@ void write_vector_operation_instruction(const unsigned char* instruction, FILE* 
         case 0b001100: fputs("vmadl ", file); write_vector_logical_instruction(instruction, file); break;
         case 0b001101: fputs("vmadm ", file); write_vector_logical_instruction(instruction, file); break;
         case 0b001110: fputs("vmadn ", file); write_vector_logical_instruction(instruction, file); break;
-        case 0b110011: fputs("vmov [TODO]", file); break;
+        case 0b110011: fputs("vmov ", file); write_vector_move_instruction(instruction, file); break;
         case 0b100111: fputs("vmrg ", file); write_vector_logical_instruction(instruction, file); break;
         case 0b000111: fputs("vmudh ", file); write_vector_logical_instruction(instruction, file); break;
         case 0b000100: fputs("vmudl ", file); write_vector_logical_instruction(instruction, file); break;
@@ -94,14 +94,14 @@ void write_vector_operation_instruction(const unsigned char* instruction, FILE* 
         case 0b101011: fputs("vnor ", file); write_vector_logical_instruction(instruction, file); break;
         case 0b101101: fputs("vnxor ", file); write_vector_logical_instruction(instruction, file); break;
         case 0b101010: fputs("vor ", file); write_vector_logical_instruction(instruction, file); break;
-        case 0b110000: fputs("vrcp [TODO]", file); break;
-        case 0b110010: fputs("vrcph [TODO]", file); break;
-        case 0b110001: fputs("vrcpl [TODO]", file); break;
+        case 0b110000: fputs("vrcp ", file); write_vector_move_instruction(instruction, file); break;
+        case 0b110010: fputs("vrcph ", file); write_vector_move_instruction(instruction, file); break;
+        case 0b110001: fputs("vrcpl ", file); write_vector_move_instruction(instruction, file); break;
         case 0b001010: fputs("vrndn ", file); write_vector_logical_instruction(instruction, file); break;
         case 0b000010: fputs("vrndp ", file); write_vector_logical_instruction(instruction, file); break;
-        case 0b110100: fputs("vrsq [TODO]", file); break;
-        case 0b110110: fputs("vrsqh [TODO]", file); break;
-        case 0b110101: fputs("vrsql [TODO]", file); break;
+        case 0b110100: fputs("vrsq ", file); write_vector_move_instruction(instruction, file); break;
+        case 0b110110: fputs("vrsqh ", file); write_vector_move_instruction(instruction, file); break;
+        case 0b110101: fputs("vrsql ", file); write_vector_move_instruction(instruction, file); break;
         case 0b011101: fputs("vsar ", file); write_vector_logical_instruction(instruction, file); break;
         case 0b010001: fputs("vsub ", file); write_vector_logical_instruction(instruction, file); break;
         case 0b010101: fputs("vsubc ", file); write_vector_logical_instruction(instruction, file); break;
@@ -119,7 +119,21 @@ void write_vector_logical_instruction(const unsigned char* instruction, FILE* fi
     unsigned char vt = get_loadstore_vector_vt(instruction);
     unsigned char element = get_vector_logical_element(instruction);
 
-    fprintf(file, "v%d, v%d, v%d[e%d]", vd, vs, vt, element);
+    if (element == 0) {
+        fprintf(file, "v%d, v%d, v%d", vd, vs, vt);
+        return;
+    }
+
+    fprintf(file, "v%d, v%d, v%d[e%d]", vd, vs, vt, element);    
+}
+
+void write_vector_move_instruction(const unsigned char* instruction, FILE* file) {
+    unsigned char e = get_vector_logical_element(instruction);
+    unsigned char vt = get_loadstore_vector_vt(instruction);
+    unsigned char de = get_vector_logical_vs(instruction);
+    unsigned char vd = get_vector_logical_vd(instruction);
+
+    fprintf(file, "v%d[e%d], v%d[e%d]", vd, de, vt, e);
 }
 
 unsigned char get_loadstore_vector_vt(const unsigned char* instruction) {
