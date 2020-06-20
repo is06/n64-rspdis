@@ -31,8 +31,8 @@ int main(int argc, char* argv[]) {
 
 void write_instruction(const unsigned char* instruction, FILE* file) {
     unsigned char instruction_identifier = get_instruction_identifier(instruction);
-    switch (instruction_identifier) {
-        
+    
+    switch (instruction_identifier) {        
         case 0b001000: fputs("addi ", file); write_base_instruction_immediate(instruction, file); break;
         case 0b001001: fputs("addiu ", file); write_base_instruction_immediate(instruction, file); break;
         case 0b001100: fputs("andi ", file); write_base_instruction_immediate(instruction, file); break;
