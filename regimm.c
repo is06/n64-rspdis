@@ -23,7 +23,7 @@ void write_regimm_instruction_rest(const unsigned char* instruction, FILE* file)
 }
 
 unsigned char get_regimm_opcode(const unsigned char* instruction) {
-    unsigned char opcode = instruction[2] & 0b11111;
+    unsigned char opcode = instruction[2] & 0b00011111;
 
     return opcode;
 }
@@ -32,7 +32,7 @@ unsigned char get_regimm_rs(const unsigned char* instruction) {
     unsigned char r0 = instruction[0] & 0b00000011;
     unsigned char r1 = instruction[1] & 0b11100000;
 
-    r0 = r0 << 5;
+    r0 = r0 << 3;
     r1 = r1 >> 5;
 
     return r0 | r1;

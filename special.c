@@ -10,7 +10,7 @@ void write_special_instruction(const unsigned char* instruction, FILE* file) {
         case 0b001101: fputs("break", file); break;
         case 0b001001: fputs("jalr [TODO]", file); break;
         case 0b001000: fputs("jr [TODO]", file); break;
-        case 0b000000: fputs("nop?/sll? [TODO]", file); break;   // NOP OR SLL
+        case 0b000000: write_special_nop_or_sll(instruction, file); break;
         case 0b100111: fputs("nor [TODO]", file); break;
         case 0b100101: fputs("or [TODO]", file); break;
         case 0b000100: fputs("sllv [TODO]", file); break;
@@ -27,6 +27,15 @@ void write_special_instruction(const unsigned char* instruction, FILE* file) {
             printf("Unsupported special opcode: %x\n", opcode);
             break;
     }
+}
+
+void write_special_nop_or_sll(const unsigned char* instruction, FILE* file) {
+    if (instruction[0] != 0 || instruction[1] != 0 || instruction[2] != 0 || instruction[3] != 0) {
+        fputs("sll [TODO]", file);
+        return;
+    }
+
+    fputs("nop", file);
 }
 
 unsigned char get_special_opcode(const unsigned char* instruction) {

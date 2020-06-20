@@ -50,62 +50,62 @@ void write_store_vector_instruction(const unsigned char* instruction, FILE* file
 }
 
 void write_loadstore_vector_instruction_rest(const unsigned char* instruction, FILE* file) {
-    unsigned int vt = get_loadstore_vector_vt(instruction);
-    fprintf(file, "v%d", vt);
-    fprintf(file, "[e%d]", get_loadstore_vector_element(instruction));
-    fputs(", ", file);
-    fprintf(file, "%d", get_loadstore_vector_offset(instruction));
-    fprintf(file, "(%d)", get_loadstore_vector_base(instruction));
+    unsigned char vt = get_loadstore_vector_vt(instruction);
+    unsigned char element = get_loadstore_vector_element(instruction);
+    unsigned char offset = get_loadstore_vector_offset(instruction);
+    unsigned char base = get_loadstore_vector_base(instruction);
+
+    fprintf(file, "v%d[e%d], %d(%d)", vt, element, offset, base);
 }
 
 void write_vector_operation_instruction(const unsigned char* instruction, FILE* file) {
     
     unsigned char opcode = get_vector_operation_opcode(instruction);
     switch (opcode) {
-        case 0b010011: fputs("vabs ", file); break;
-        case 0b010000: fputs("vadd ", file); break;
-        case 0b010100: fputs("vaddc ", file); break;
-        case 0b101000: fputs("vand ", file); break;
-        case 0b100101: fputs("vch ", file); break;
-        case 0b100100: fputs("vcl ", file); break;
-        case 0b100110: fputs("vcr ", file); break;
-        case 0b100001: fputs("veq ", file); break;
-        case 0b100011: fputs("vge ", file); break;
-        case 0b100000: fputs("vlt ", file); break;
-        case 0b001000: fputs("vmacf ", file); break;
-        case 0b001011: fputs("vmacq ", file); break;
-        case 0b001001: fputs("vmacu ", file); break;
-        case 0b001111: fputs("vmadh ", file); break;
-        case 0b001100: fputs("vmadl ", file); break;
-        case 0b001101: fputs("vmadm ", file); break;
-        case 0b001110: fputs("vmadn ", file); break;
-        case 0b110011: fputs("vmov ", file); break;
-        case 0b100111: fputs("vmrg ", file); break;
-        case 0b000111: fputs("vmudh ", file); break;
-        case 0b000100: fputs("vmudl ", file); break;
-        case 0b000101: fputs("vmudm ", file); break;
-        case 0b000110: fputs("vmudn ", file); break;
-        case 0b000000: fputs("vmulf ", file); break;
-        case 0b000011: fputs("vmulq ", file); break;
-        case 0b000001: fputs("vmulu ", file); break;
-        case 0b101001: fputs("vnand ", file); break;
-        case 0b100010: fputs("vne ", file); break;
-        case 0b110111: fputs("vnop ", file); break;
-        case 0b101011: fputs("vnor ", file); break;
-        case 0b101101: fputs("vnxor ", file); break;
-        case 0b101010: fputs("vor ", file); break;
-        case 0b110000: fputs("vrcp ", file); break;
-        case 0b110010: fputs("vrcph ", file); break;
-        case 0b110001: fputs("vrcpl ", file); break;
-        case 0b001010: fputs("vrndn ", file); break;
-        case 0b000010: fputs("vrndp ", file); break;
-        case 0b110100: fputs("vrsq ", file); break;
-        case 0b110110: fputs("vrsqh ", file); break;
-        case 0b110101: fputs("vrsql ", file); break;
-        case 0b011101: fputs("vsar ", file); break;
-        case 0b010001: fputs("vsub ", file); break;
-        case 0b010101: fputs("vsubc ", file); break;
-        case 0b101100: fputs("vxor ", file); break;
+        case 0b010011: fputs("vabs ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b010000: fputs("vadd ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b010100: fputs("vaddc ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b101000: fputs("vand ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b100101: fputs("vch ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b100100: fputs("vcl ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b100110: fputs("vcr ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b100001: fputs("veq ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b100011: fputs("vge ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b100000: fputs("vlt ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b001000: fputs("vmacf ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b001011: fputs("vmacq ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b001001: fputs("vmacu ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b001111: fputs("vmadh ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b001100: fputs("vmadl ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b001101: fputs("vmadm ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b001110: fputs("vmadn ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b110011: fputs("vmov [TODO]", file); break;
+        case 0b100111: fputs("vmrg ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b000111: fputs("vmudh ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b000100: fputs("vmudl ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b000101: fputs("vmudm ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b000110: fputs("vmudn ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b000000: fputs("vmulf ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b000011: fputs("vmulq ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b000001: fputs("vmulu ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b101001: fputs("vnand ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b100010: fputs("vne ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b110111: fputs("vnop", file); break;
+        case 0b101011: fputs("vnor ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b101101: fputs("vnxor ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b101010: fputs("vor ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b110000: fputs("vrcp [TODO]", file); break;
+        case 0b110010: fputs("vrcph [TODO]", file); break;
+        case 0b110001: fputs("vrcpl [TODO]", file); break;
+        case 0b001010: fputs("vrndn ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b000010: fputs("vrndp ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b110100: fputs("vrsq [TODO]", file); break;
+        case 0b110110: fputs("vrsqh [TODO]", file); break;
+        case 0b110101: fputs("vrsql [TODO]", file); break;
+        case 0b011101: fputs("vsar ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b010001: fputs("vsub ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b010101: fputs("vsubc ", file); write_vector_logical_instruction(instruction, file); break;
+        case 0b101100: fputs("vxor ", file); write_vector_logical_instruction(instruction, file); break;
         default:
             printf("Unsupported vector operation opcode: %x\n", opcode);
             fputs("[unknown]", file);
@@ -113,36 +113,45 @@ void write_vector_operation_instruction(const unsigned char* instruction, FILE* 
     }
 }
 
+void write_vector_logical_instruction(const unsigned char* instruction, FILE* file) {
+    unsigned char vd = get_vector_logical_vd(instruction);
+    unsigned char vs = get_vector_logical_vs(instruction);
+    unsigned char vt = get_loadstore_vector_vt(instruction);
+    unsigned char element = get_vector_logical_element(instruction);
+
+    fprintf(file, "v%d, v%d, v%d[e%d]", vd, vs, vt, element);
+}
+
 unsigned char get_loadstore_vector_vt(const unsigned char* instruction) {
-    return instruction[1] & 0b11111;
+    return instruction[1] & 0b00011111;
 }
 
 unsigned char get_loadstore_vector_element(const unsigned char* instruction) {
-    unsigned char element2 = instruction[2] & 0b111;
+    unsigned char element2 = instruction[2] & 0b00000111;
     unsigned char element3 = instruction[3] & 0b10000000;
 
-    element2 = element2 << 7;
+    element2 = element2 << 1;
     element3 = element3 >> 7;
 
     return element2 | element3;
 }
 
 unsigned char get_loadstore_vector_offset(const unsigned char* instruction) {
-    return instruction[3] & 0b1111111;
+    return instruction[3] & 0b01111111;
 }
 
 unsigned char get_loadstore_vector_base(const unsigned char* instruction) {   
-    unsigned char base0 = instruction[0] & 0b11; // byte AND 00000011
+    unsigned char base0 = instruction[0] & 0b00000011;
     unsigned char base1 = instruction[1] & 0b11100000;
 
-    base0 = base0 << 5;
+    base0 = base0 << 3;
     base1 = base1 >> 5;
 
     return base0 | base1;
 }
 
 unsigned char get_vector_operation_opcode(const unsigned char* instruction) {
-    unsigned char opcode = instruction[3] & 0b111111;
+    unsigned char opcode = instruction[3] & 0b00111111;
 
     return opcode;
 }
@@ -152,4 +161,29 @@ unsigned char get_loadstore_vector_opcode(const unsigned char* instruction) {
     opcode = opcode >> 3;
 
     return opcode;
+}
+
+unsigned char get_vector_logical_element(const unsigned char* instruction) {
+    unsigned char element0 = instruction[0] & 0b00000001;
+    unsigned char element1 = instruction[1] & 0b11100000;
+
+    element0 = element0 << 3;
+    element1 = element1 >> 5;
+
+    return element0 | element1;
+}
+
+unsigned char get_vector_logical_vs(const unsigned char* instruction) {
+    unsigned char vs = instruction[2] & 0b11111000;
+    return vs >> 3;
+}
+
+unsigned char get_vector_logical_vd(const unsigned char* instruction) {
+    unsigned char vd2 = instruction[2] & 0b00000111;
+    unsigned char vd3 = instruction[3] & 0b11000000;
+
+    vd2 = vd2 << 2;
+    vd3 = vd3 >> 6;
+
+    return vd2 | vd3;
 }

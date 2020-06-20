@@ -31,14 +31,14 @@ unsigned char get_base_r0(const unsigned char* instruction) {
     unsigned char r0 = instruction[0] & 0b00000011;
     unsigned char r1 = instruction[1] & 0b11100000;
 
-    r0 = r0 << 5;
+    r0 = r0 << 3;
     r1 = r1 >> 5;
 
     return r0 | r1;
 }
 
 unsigned char get_base_r1(const unsigned char* instruction) {
-    unsigned char r = instruction[1] & 0b11111;
+    unsigned char r = instruction[1] & 0b00011111;
 
     return r;
 }

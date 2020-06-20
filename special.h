@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 void write_special_instruction(const unsigned char* instruction, FILE* file);
-
+void write_special_nop_or_sll(const unsigned char* instruction, FILE* file);
 unsigned char get_special_opcode(const unsigned char* instruction);
 
 #endif
