@@ -5,8 +5,9 @@
 
 void write_base_instruction_immediate(const unsigned char* instruction, FILE* file);
 void write_base_instruction_branch(const unsigned char* instruction, FILE* file);
+void write_base_instruction_branch_zero(const unsigned char* instruction, FILE* file);
 void write_base_instruction_jump(const unsigned char* instruction, FILE* file);
-void write_base_instruction_load(const unsigned char* instruction, FILE* file);
+void write_base_instruction_loadstore(const unsigned char* instruction, FILE* file);
 
 unsigned char get_base_r0(const unsigned char* instruction);
 unsigned char get_base_r1(const unsigned char* instruction);

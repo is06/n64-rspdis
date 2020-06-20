@@ -15,12 +15,18 @@ void write_base_instruction_branch(const unsigned char* instruction, FILE* file)
     fprintf(file, "%d, %d, %d", rs, rt, offset);
 }
 
+void write_base_instruction_branch_zero(const unsigned char* instruction, FILE* file) {
+    unsigned char rs = get_base_r0(instruction);
+    unsigned short offset = get_base_immediate(instruction);
+    fprintf(file, "%d, %d", rs, offset);
+}
+
 void write_base_instruction_jump(const unsigned char* instruction, FILE* file) {
     unsigned int address = get_base_jump_address(instruction);
     fprintf(file, "$%x", address);
 }
 
-void write_base_instruction_load(const unsigned char* instruction, FILE* file) {
+void write_base_instruction_loadstore(const unsigned char* instruction, FILE* file) {
     unsigned char base = get_base_r0(instruction);
     unsigned char rt = get_base_r1(instruction);
     unsigned short offset = get_base_immediate(instruction);
